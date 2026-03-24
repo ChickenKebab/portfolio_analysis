@@ -1,3 +1,12 @@
+'''
+portfolio.py
+
+Provides tools to calculate the required information for Modern Portfolio Theory.
+Specifically:
+- Daily Returns, Expected Returns, Covariance Matrix, Correlation Matrix, Portfolio Expected Return, Portfolio Variance, Portfolio Volatility, Sharpe Ratio.
+
+'''
+
 import numpy as np
 import pandas as pd
 

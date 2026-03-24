@@ -1,3 +1,11 @@
+'''
+optimiser.py
+
+Provides the tools to optimise portfolio weights using Modern Portfolio Theory.
+
+It uses Monte Carlo simulation across 10,000 random weight allocations.
+'''
+
 import numpy as np
 import pandas as pd
 

@@ -1,3 +1,17 @@
+'''
+app.py
+
+FrontEnd of the app. 
+
+Streamlit is used due to the nature of the project and to simplify the front end process while still being presentable. 
+
+It manages a multi screen user flow: landing --> input --> preferences --> loading --> analysis
+
+It also orchestrates the fetcher and the tools put together.
+
+"""
+'''
+
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -6,14 +20,15 @@ from core.portfolio import portfolio
 from core.analyser import analyser
 from core.optimiser import optimiser
 
-# ── page config ──────────────────────────────────────────────
+
+# Page Config
 st.set_page_config(
     page_title="Portfolio Analyser",
     page_icon="📈",
     layout="wide"
 )
 
-# ── session state init ────────────────────────────────────────
+
 if 'screen' not in st.session_state:
     st.session_state.screen = 'landing'
 if 'tickers' not in st.session_state:
@@ -28,27 +43,26 @@ if 'optimiser_obj' not in st.session_state:
     st.session_state.optimiser_obj = None
 
 
-# ── screen 1: landing ─────────────────────────────────────────
+# Landing Screen (Screen 1)
 def render_landing():
     st.title("📈 Portfolio Analyser")
-    st.subheader("Institutional-grade portfolio analysis for every investor.")
+    st.subheader("Analyse and optimise your portfolio")
     
     st.write("""
-    Most investors don't know if their portfolio is actually efficient.
-    This tool tells you exactly where you stand — and how to improve.
+    This tool uses Modern Portfolio Theory to analyse and optimise your current portfolio or a potential portfolio that you are thinking about.
     """)
 
     st.markdown("### How it works")
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("**1. Input your portfolio**")
-        st.write("Enter your tickers and how much you hold in each.")
+        st.write("Enter your tickers and the weights.")
     with col2:
-        st.markdown("**2. We run the analysis**")
-        st.write("We fetch real market data and apply Modern Portfolio Theory.")
+        st.markdown("**2. Analysis**")
+        st.write("The tool fetches real market data and applies Modern Portfolio Theory.")
     with col3:
-        st.markdown("**3. Get your results**")
-        st.write("See your risk, return, Sharpe ratio, and how to optimise.")
+        st.markdown("**3. See Results**")
+        st.write("See the analysis of your portfolio and how you can optimise it according to Modern Portfolio Theory.")
 
     st.divider()
     if st.button("Get Started →", type="primary"):
@@ -56,12 +70,12 @@ def render_landing():
         st.rerun()
 
 
-# ── screen 2: input ───────────────────────────────────────────
+# Input Screen (Screen 2)
 def render_input():
     st.title("Your Portfolio")
     st.write("Enter each ticker and its weight as a percentage. Weights must sum to 100%.")
 
-    # dynamic rows using session state
+    
     if 'rows' not in st.session_state:
         st.session_state.rows = [{"ticker": "", "weight": 0.0}]
 
@@ -103,7 +117,7 @@ def render_input():
             st.rerun()
 
 
-# ── screen 3: preferences ─────────────────────────────────────
+# Preferences Screen (Screen 3)
 def render_preferences():
     st.title("Preferences")
     st.write("Configure your analysis settings.")
@@ -126,7 +140,7 @@ def render_preferences():
             st.rerun()
 
 
-# ── screen 4: loading ─────────────────────────────────────────
+# Loading Screen (Screen 4)
 def render_loading():
     st.title("Running Analysis...")
 
@@ -144,7 +158,7 @@ def render_loading():
     with st.spinner("Running Monte Carlo optimisation (10,000 simulations)..."):
         o = optimiser(p.weights, p.expected_returns_df, p.covariance_matrix)
 
-    # store everything in session state
+    
     st.session_state.portfolio_obj = p
     st.session_state.analyser_obj = a
     st.session_state.optimiser_obj = o
@@ -153,7 +167,7 @@ def render_loading():
     st.rerun()
 
 
-# ── screen 5: analysis ────────────────────────────────────────
+# Analysis Screen (Screen 5)
 def render_analysis():
     p = st.session_state.portfolio_obj
     a = st.session_state.analyser_obj
@@ -161,7 +175,7 @@ def render_analysis():
 
     st.title("Portfolio Analysis")
 
-    # ── section 1: summary cards ──
+
     st.header("Portfolio Overview")
     col1, col2, col3, col4 = st.columns(4)
     with col1:
@@ -175,25 +189,25 @@ def render_analysis():
 
     st.divider()
 
-    # ── section 2: efficient frontier ──
+
     st.header("Efficient Frontier")
     render_frontier(p, o)
 
     st.divider()
 
-    # ── section 3: correlation heatmap ──
+
     st.header("Correlation Matrix")
     render_heatmap(p)
 
     st.divider()
 
-    # ── section 4: asset breakdown ──
+
     st.header("Individual Asset Breakdown")
     render_asset_table(p, a)
 
     st.divider()
 
-    # ── section 5: optimiser ──
+
     st.header("Portfolio Optimiser")
     render_optimiser(p, o)
 
@@ -203,7 +217,7 @@ def render_analysis():
         st.rerun()
 
 
-# ── charts ────────────────────────────────────────────────────
+# Charts
 def render_frontier(p, o):
     import plotly.graph_objects as go
 
@@ -213,7 +227,7 @@ def render_frontier(p, o):
 
     fig = go.Figure()
 
-    # all monte carlo portfolios
+    
     fig.add_trace(go.Scatter(
         x=mc['volatility'], y=mc['expected_return'],
         mode='markers',
@@ -221,21 +235,21 @@ def render_frontier(p, o):
         name='Possible Portfolios'
     ))
 
-    # current portfolio
+    
     fig.add_trace(go.Scatter(
         x=[p.portfolio_volatility], y=[p.portfolio_expected_return],
         mode='markers', marker=dict(color='red', size=15, symbol='star'),
         name='Your Portfolio'
     ))
 
-    # max sharpe
+    
     fig.add_trace(go.Scatter(
         x=[max_sharpe_row['volatility']], y=[max_sharpe_row['expected_return']],
         mode='markers', marker=dict(color='gold', size=15, symbol='star'),
         name='Max Sharpe'
     ))
 
-    # min variance
+   
     fig.add_trace(go.Scatter(
         x=[min_var_row['volatility']], y=[min_var_row['expected_return']],
         mode='markers', marker=dict(color='green', size=15, symbol='star'),
@@ -305,7 +319,7 @@ def render_optimiser(p, o):
             st.metric("Optimised Sharpe", f"{best['sharpe_ratio']:.2f}",
                       delta=f"{best['sharpe_ratio'] - p.sharpe_ratio:.2f}")
 
-        # weights comparison chart
+        
         fig = go.Figure()
         fig.add_trace(go.Bar(name='Current', x=p.tickers, y=p.weights))
         fig.add_trace(go.Bar(name='Optimised', x=p.tickers, y=best['weights']))
@@ -315,7 +329,7 @@ def render_optimiser(p, o):
         st.warning("No portfolio found near this risk level. Try adjusting the slider.")
 
 
-# ── router ────────────────────────────────────────────────────
+# Router
 if st.session_state.screen == 'landing':
     render_landing()
 elif st.session_state.screen == 'input':

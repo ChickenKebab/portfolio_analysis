@@ -1,3 +1,11 @@
+'''
+analyser.py
+
+Provides the tools to analyse portfolio risk under Modern Portfolio Theorem.
+Specifically:
+Measures the maximum drawdown compared to SPY, CAPM Beta, and risk contribution per asset.
+'''
+
 import numpy as np
 import pandas as pd
 
