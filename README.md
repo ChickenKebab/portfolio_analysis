@@ -47,6 +47,32 @@ requirements.txt
 3. The app fetches historical data and computes MPT metrics
 4. Results are displayed across 5 sections: Overview, efficient frontier, correlation matrix, asset breakdown, and optimiser.
 
+# Screenshots
+
+Home Screen (Screen 1):
+
+![Portfolio Analyser](images/Screen-1.png)
+
+Input Screen (Screen 2):
+
+![Portfolio Analyser](images/Screen-2.png)
+
+Settings Screen (Screen 3):
+
+![Portfolio Analyser](images/Screen-3.png)
+
+Loading Screen (Screen 4):
+
+![Portfolio Analyser](images/Screen-4.png)
+
+Results Screen (Screen 5):
+
+![Portfolio Analyser](images/Screen-5-1.png)
+![Portfolio Analyser](images/Screen-5-2.png)
+![Portfolio Analyser](images/Screen-5-3.png)
+![Portfolio Analyser](images/Screen-5-4.png)
+![Portfolio Analyser](images/Screen-5-5.png)
+
 
 
 
