@@ -68,9 +68,13 @@ Loading Screen (Screen 4):
 Results Screen (Screen 5):
 
 ![Portfolio Analyser](images/Screen-5-1.png)
+.
 ![Portfolio Analyser](images/Screen-5-2.png)
+.
 ![Portfolio Analyser](images/Screen-5-3.png)
+.
 ![Portfolio Analyser](images/Screen-5-4.png)
+.
 ![Portfolio Analyser](images/Screen-5-5.png)
 
 
