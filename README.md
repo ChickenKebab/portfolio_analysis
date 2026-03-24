@@ -1,4 +1,4 @@
-PORTFOLIO ANALYSER (MODERN PORTFOLIO THEORY)
+# PORTFOLIO ANALYSER (MODERN PORTFOLIO THEORY)
 
 A quantitative portfolio analysis tool that is built on Moderm Portfolio Theory. 
 
@@ -7,11 +7,11 @@ The tool allows the user to input their portfolio or a portfolio that they are c
 It fetches real market data using OBB, computes standard portfolio metrics, risks/returns metrics, and runs a 10,000 Monte Carlo optimisation to showcase the efficient frontier and how your portfolio compares.
 
 
-Background:
+# Background:
 Built to develop a practical understanding of Modern Portfolio Theory.
 
 
-Features:
+# Features
 Fetcher - Historical data of the users chosen stocks. It also fetches SPY for comparison and to calculate metrics.
 Portfolio Metrics - Daily returns, expected annual return, volatility, and Sharpe ratio
 Risk Analysis - CAPM beta per asset, marginal risk contribution, and maximum drawdown vs SPY benchmark
@@ -19,18 +19,19 @@ Efficient Frontier - Monte Carlo Simulation of 10,000 random weight allocations
 Correlation Heatmap 
 Portfolio Optimiser
 
-Tech Stack:
+# Tech Stack:
 Python
 (Steamlit, pandas, numpy, matplotlib, openbb)
 
-Setup: (Please note you need an openbb account)
+# Setup: 
+(Please note you need an openbb account)
 git clone https://github.com/ChickenKebab/portfolio-analyser.git
 cd portfolio-analyser
 pip install -r requirements.txt
 streamlit run app.py
 
 
-Project Structure:
+# Project Structure:
 app.py
 data/fetcher.py
 core/portfolio.py, optimiser.py, portfolio.py
@@ -40,7 +41,7 @@ README.md
 requirements.txt
 
 
-How it works:
+# How it works:
 1. Enter your stock picks and weights.
 2. Set the historical data period and risk free rate
 3. The app fetches historical data and computes MPT metrics
